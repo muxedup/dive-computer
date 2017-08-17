@@ -37,7 +37,6 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
     disp_msg_t* p_update_msg;
     p_update_msg = &update_msg;
 
-    unsigned char dummy_counter = 0;
     unsigned char unitsState = 0;
     //char dispString[20];
     prev_alarm_status = ALARM_0;
@@ -49,8 +48,10 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         switch(eventReg) {
         case 0x0001: // Timer elapsed update dive parameters
             depth_mm += depth_change_in_mm(dive_rate_mm);
-            if (depth_mm > 0) {
+
+            if (depth_mm >= 0) {
                 dive_time_elapsed_ms = 0;
+                depth_mm = 0;
             }
             if(dive_time_elapsed_ms > 0) {
                 oxygen_cl -= gas_rate_in_cl(depth_mm);
@@ -64,7 +65,9 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
             break;
         case 0x0004: // button 2 press
             if (depth_mm == 0) {
-                oxygen_cl += INC_O2_TANK_CL;
+                if (oxygen_cl < MAX_O2_TANK_VOL_CL) {
+                    oxygen_cl += INC_O2_TANK_CL;
+                }
             }
             break;
         case 0x0008: // adc event
@@ -84,7 +87,7 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         } else if (dive_rate_mm > 15) {
             // Medium alert
             alarm_status = ALARM_M;
-        } else if (depth_mm < MAX_DEPTH_MM) {
+        } else if (depth_mm < (int32_t)MAX_DEPTH_MM) {
             // low alert
             alarm_status = ALARM_L;
         } else {
@@ -93,12 +96,12 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         // Post event update if necessary
         if (alarm_status != prev_alarm_status) {
             Event_post(g_alarm_event_handle, alarm_status);
-            alarm_status = prev_alarm_status;
+            prev_alarm_status = alarm_status;
         }
         // update display
 
-        update_msg.unit_is_meters = 1;
-        update_msg.depth_mm = dummy_counter++;
+        update_msg.unit_is_meters = unitsState;
+        update_msg.depth_mm = depth_mm;
         update_msg.dive_rate_mm = dive_rate_mm;
         update_msg.dive_time_elapsed_ms = dive_time_elapsed_ms;
         update_msg.oxygen_cl = oxygen_cl;
