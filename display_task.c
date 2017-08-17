@@ -37,6 +37,7 @@ void display_task(uint32_t arg0, uint32_t arg1)
     disp_msg_t*   msg;
     char buf[LCD_CHARS_PER_LINE+1];
     String units;
+    String alarm;
     int ret;
 
     int32_t depth_converted;
@@ -56,33 +57,48 @@ void display_task(uint32_t arg0, uint32_t arg1)
             msg->dive_rate_mm = msg->dive_rate_mm*13/4;
         }
 
+        switch(msg->alarm_status) {
+                case 1:
+                    alarm = "NONE";
+                            break;
+                case 2:
+                    alarm = "LOW";
+                    break;
+                case 4:
+                    alarm = "MEDIUM";
+                    break;
+                case 5:
+                    alarm = "HIGH";
+                    break;
+        }
+
         memset(buf, '\0',LCD_CHARS_PER_LINE+1);
 
-        ret = snprintf(buf, LCD_CHARS_PER_LINE, "DEPTH: %d %s", depth_converted, units);
+        ret = snprintf(buf, LCD_CHARS_PER_LINE, "DEPTH: %d %s              ", depth_converted, units);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE2, buf);
 
         memset(buf, '\0',LCD_CHARS_PER_LINE+1);
 
-        ret = snprintf(buf, LCD_CHARS_PER_LINE, "RATE: %d %s/min", msg->dive_rate_mm, units);
+        ret = snprintf(buf, LCD_CHARS_PER_LINE, "RATE: %d %s/min           ", msg->dive_rate_mm, units);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE3, buf);
 
         memset(buf, '\0',LCD_CHARS_PER_LINE+1);
 
-        ret = snprintf(buf, LCD_CHARS_PER_LINE, "AIR: %d L", msg->oxygen_cl/100);
+        ret = snprintf(buf, LCD_CHARS_PER_LINE, "AIR: %d L                 ", msg->oxygen_cl/100);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE4, buf);
 
         memset(buf, '\0',LCD_CHARS_PER_LINE+1);
 
-        ret = snprintf(buf, LCD_CHARS_PER_LINE, "EDT: %d:%d:%d",msg->dive_time_elapsed_ms/(1000*60*60), (msg->dive_time_elapsed_ms%(1000*60*60))/(1000*60), ((msg->dive_time_elapsed_ms%(1000*60*60))%(1000*60))/1000);
+        ret = snprintf(buf, LCD_CHARS_PER_LINE, "EDT: %d:%d:%d             ",msg->dive_time_elapsed_ms/(1000*60*60), (msg->dive_time_elapsed_ms%(1000*60*60))/(1000*60), ((msg->dive_time_elapsed_ms%(1000*60*60))%(1000*60))/1000);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE5, buf);
 
         memset(buf, '\0',LCD_CHARS_PER_LINE+1);
 
-        ret = snprintf(buf, LCD_CHARS_PER_LINE, "Alarm: %d", msg->alarm_status);
+        ret = snprintf(buf, LCD_CHARS_PER_LINE, "Alarm: %s                 ", alarm);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE7, buf);
 
