@@ -12,7 +12,7 @@
 #define INC_O2_TANK_CL 500
 #define START_O2_TANK_CL 5000
 #define TIMER_TICK_INTERVAL 500
-#define MAX_DEPTH_MM -40000
+#define MAX_DEPTH_MM 40000
 void dive_controller_task(uint32_t, uint32_t);
 
 #endif /* DIVE_CONTROLLER_H_ */
