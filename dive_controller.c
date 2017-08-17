@@ -37,10 +37,13 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
     disp_msg_t* p_update_msg;
     p_update_msg = &update_msg;
 
+    unsigned char dummy_counter = 0;
     unsigned char unitsState = 0;
     //char dispString[20];
+    prev_alarm_status = ALARM_0;
 
     for(;;) {
+        //Task_sleep(1000);
         eventReg = Event_pend(g_event_handle, 0x0000,0x000F, BIOS_WAIT_FOREVER);
         // Handle new event
         switch(eventReg) {
@@ -63,6 +66,7 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
             if (depth_mm == 0) {
                 oxygen_cl += INC_O2_TANK_CL;
             }
+            break;
         case 0x0008: // adc event
             Mailbox_pend(g_adc_mbox, &adc_value, 10);
             dive_rate_mm = adc_to_rate(adc_value);
@@ -93,8 +97,8 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         }
         // update display
 
-        update_msg.unit_is_meters = unitsState;
-        update_msg.depth_mm = depth_mm;
+        update_msg.unit_is_meters = 1;
+        update_msg.depth_mm = dummy_counter++;
         update_msg.dive_rate_mm = dive_rate_mm;
         update_msg.dive_time_elapsed_ms = dive_time_elapsed_ms;
         update_msg.oxygen_cl = oxygen_cl;
@@ -102,7 +106,7 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
 
         Mailbox_post(g_display_mbox, &p_update_msg, 10);
 
-
+        Task_sleep(50);
     }
 
 

@@ -34,8 +34,9 @@ void timerTaskFunction(UArg arg0, UArg arg1)
     // Time : bit 0
     for(;;)
     {
-        Event_post(g_event_handle, 0x00);
         Task_sleep(500);
+        Event_post(g_event_handle, 0x01);
+
     }
 
 }

@@ -23,7 +23,7 @@ Task_Struct alarmTask;    /* not static so you can see in ROV */
 static uint8_t alarmTaskStack[ALARM_TASK_STACK_SIZE];
 uint32_t alarm_event;
 Event_Handle g_alarm_event_handle;
-static PWM_Handle g_pwm_buzzer = NULL;
+PWM_Handle g_pwm_buzzer;
 const wave_t *p_waveform;
 
 static const wave_t alarm_low    = { TONE_LO,  TONE_MED, 2, 0};
@@ -44,7 +44,7 @@ void alarmTask_init( void )
 void alarmTaskFunction(UArg arg0, UArg arg1)
 {
         // Configure the speaker hardware.
-        speaker_config();
+    speaker_config();
 
 //    Highest Priority: Insufficient air to safely ascend from current depth.
 //    ii. Medium Priority: The current ascent rate is dangerous (> 15 m/min).

@@ -16,7 +16,7 @@
 #include "common.h"
 
 // Speaker Task Items
-static PWM_Handle g_pwm_buzzer = NULL;
+extern PWM_Handle g_pwm_buzzer;
 
 /*!
 *
