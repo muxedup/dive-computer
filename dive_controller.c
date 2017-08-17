@@ -34,6 +34,8 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
 
     uint8_t alarm_status, prev_alarm_status;
     disp_msg_t update_msg;
+    disp_msg_t* p_update_msg;
+    p_update_msg = &update_msg;
 
     unsigned char unitsState = 0;
     //char dispString[20];
@@ -98,7 +100,7 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         update_msg.oxygen_cl = oxygen_cl;
         update_msg.alarm_status = alarm_status;
 
-        Mailbox_post(g_display_mbox, &update_msg, 0);
+        Mailbox_post(g_display_mbox, &p_update_msg, 0);
 
 
     }

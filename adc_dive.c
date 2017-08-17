@@ -25,7 +25,7 @@
 #include "common.h"
 #include "adc_dive.h"
 
-extern Mailbox_Handle g_adc_mbox;
+Mailbox_Handle g_adc_mbox;
 extern Event_Handle g_event_handle;
 
 void adc_task (unsigned int task_arg0, unsigned int task_arg1){

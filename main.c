@@ -33,13 +33,14 @@ static Task_Handle g_startup_task_handle;
 
 // Event Handle
 Event_Handle g_event_handle;
+extern Event_Handle g_alarm_event_handle;
 
 // ADC mailbox and buffer
-Mailbox_Handle g_adc_mbox;
+extern Mailbox_Handle g_adc_mbox;
 //adc_mailbox_msg_t g_adc_buf[ADC_MSG_COUNT];
 
 // Display mailbox and buffer
-Mailbox_Handle g_display_mbox;
+extern Mailbox_Handle g_display_mbox;
 //display_mailbox_msg_t g_display_buf[DISPLAY_MSG_COUNT];
 
 
@@ -114,6 +115,8 @@ static void startup_task(uint32_t arg0, uint32_t arg1)
     g_event_handle = Event_create(NULL, &eb);
     SYS_ASSERT(!Error_check(&eb));
 
+    g_alarm_event_handle = Event_create(NULL, &eb);
+    SYS_ASSERT(!Error_check(&eb) && g_alarm_event_handle != NULL);
     // Create the ADC task.
     Task_Params_init(&task_params);
     task_params.priority  = ADC_PRIO;

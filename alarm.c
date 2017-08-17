@@ -52,7 +52,7 @@ void speaker_config (void)
  *  @param[in] task_arg1 unused, argument from SYS/BIOS task create
  */
 /*lint -e{715} symbol not referenced */
-static void speaker_task(uint32_t arg0, uint32_t arg1)
+void speaker_task(uint32_t arg0, uint32_t arg1)
 {
     wave_t const *  p_waveform = (wave_t const *) arg0;
     SYS_ASSERT(p_waveform != NULL);
