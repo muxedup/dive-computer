@@ -24,7 +24,7 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
     uint32_t depth_mm = 0;
     int32_t dive_rate_mm = 0; // meters per minute
     int32_t gas_rate_cl = 0;
-    uint32_t oxygen_cl = START_O2_TANK_CL;
+    uint16_t oxygen_cl = START_O2_TANK_CL;
     uint32_t oxygen_to_surf_cl = 0;
     int32_t dive_time_elapsed_ms = 0;
 
@@ -56,7 +56,12 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
             }
 
             if(depth_mm > 0) {
-                oxygen_cl -= gas_rate_in_cl(depth_mm);
+                if ((int16_t) oxygen_cl > 0) {
+                    oxygen_cl -= gas_rate_in_cl(depth_mm);
+                } else {
+                    oxygen_cl = 0;
+                }
+
                 oxygen_to_surf_cl = gas_to_surface_in_cl(depth_mm);
 
                 dive_time_elapsed_ms += TIMER_TICK_INTERVAL;
