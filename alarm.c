@@ -15,10 +15,6 @@
 #include "alarm.h"
 #include "common.h"
 
-static const wave_t alarm_low    = { TONE_LO,  TONE_MED, 2, 0};
-static const wave_t alarm_medium = { TONE_MED, TONE_HI,  1, 0};
-static const wave_t alarm_high   = { TONE_LO,  TONE_HI,  1, 1};
-
 // Speaker Task Items
 static PWM_Handle g_pwm_buzzer = NULL;
 
