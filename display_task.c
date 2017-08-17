@@ -56,7 +56,7 @@ void display_task(uint32_t arg0, uint32_t arg1)
             msg->dive_rate_mm = msg->dive_rate_mm*13/4;
         }
 
-        ret = snprintf(buf, LCD_CHARS_PER_LINE, "DEPTH: %d %c", msg->depth_mm, units);
+        ret = snprintf(buf, LCD_CHARS_PER_LINE, "DEPTH: %d %c", depth_converted, units);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE2, buf);
 
