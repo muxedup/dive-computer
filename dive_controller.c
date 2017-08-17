@@ -39,7 +39,7 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
     //char dispString[20];
 
     for(;;) {
-        eventReg = Event_pend(g_event_handle, 0x0000,0x0007, BIOS_WAIT_FOREVER);
+        eventReg = Event_pend(g_event_handle, 0x0000,0x000F, BIOS_WAIT_FOREVER);
         // Handle new event
         switch(eventReg) {
         case 0x0001: // Timer elapsed update dive parameters
