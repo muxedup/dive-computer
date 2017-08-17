@@ -199,6 +199,7 @@ display_task.obj: ../adc_dive.h
 display_task.obj: ../protectedlcd.h
 display_task.obj: ../common.h
 display_task.obj: ../display_task.h
+display_task.obj: /Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/String.h
 
 ../display_task.c: 
 /Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/stdint.h: 
@@ -399,3 +400,4 @@ display_task.obj: ../display_task.h
 ../protectedlcd.h: 
 ../common.h: 
 ../display_task.h: 
+/Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/String.h: 

@@ -21,7 +21,7 @@ extern Mailbox_Handle g_display_mbox;
 extern Mailbox_Handle g_adc_mbox;
 
 void dive_controller_task(uint32_t arg0, uint32_t arg1) {
-    int32_t depth_mm = 0;
+    uint32_t depth_mm = 0;
     int32_t dive_rate_mm = 0; // meters per minute
     int32_t gas_rate_cl = 0;
     uint32_t oxygen_cl = START_O2_TANK_CL;
@@ -29,7 +29,6 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
     int32_t dive_time_elapsed_ms = 0;
 
     uint16_t adc_value = 475;
-    int32_t dive_time_remaining_s = 0;
     uint32_t eventReg = 0;
 
     uint8_t alarm_status, prev_alarm_status;
@@ -47,13 +46,14 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         // Handle new event
         switch(eventReg) {
         case 0x0001: // Timer elapsed update dive parameters
-            depth_mm += depth_change_in_mm(dive_rate_mm);
+            depth_mm -= depth_change_in_mm(dive_rate_mm);
 
-            if (depth_mm >= 0) {
+            if ((int32_t)depth_mm <= 0) {
                 dive_time_elapsed_ms = 0;
                 depth_mm = 0;
             }
-            if(dive_time_elapsed_ms > 0) {
+
+            if(depth_mm > 0) {
                 oxygen_cl -= gas_rate_in_cl(depth_mm);
                 oxygen_to_surf_cl = gas_to_surface_in_cl(depth_mm);
 

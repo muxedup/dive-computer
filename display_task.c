@@ -21,7 +21,7 @@
 #include "protectedlcd.h"
 #include "common.h"
 #include "display_task.h"
-
+#include <String.h>
 /**
  *  SYS/BIOS task. Displays to the LCD.
  *
@@ -36,7 +36,7 @@ void display_task(uint32_t arg0, uint32_t arg1)
     protected_lcd_display(LCD_LINE0, "DARMIN 3000");
     disp_msg_t*   msg;
     char buf[LCD_CHARS_PER_LINE+1];
-    char* units;
+    String units;
     int ret;
 
     int32_t depth_converted;
@@ -56,27 +56,37 @@ void display_task(uint32_t arg0, uint32_t arg1)
             msg->dive_rate_mm = msg->dive_rate_mm*13/4;
         }
 
-        ret = snprintf(buf, LCD_CHARS_PER_LINE, "DEPTH: %d %c", depth_converted, units);
+        memset(buf, '\0',LCD_CHARS_PER_LINE+1);
+
+        ret = snprintf(buf, LCD_CHARS_PER_LINE, "DEPTH: %d %s", depth_converted, units);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE2, buf);
 
-        ret = snprintf(buf, LCD_CHARS_PER_LINE, "RATE: %d %c/min", msg->dive_rate_mm, units);
+        memset(buf, '\0',LCD_CHARS_PER_LINE+1);
+
+        ret = snprintf(buf, LCD_CHARS_PER_LINE, "RATE: %d %s/min", msg->dive_rate_mm, units);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE3, buf);
+
+        memset(buf, '\0',LCD_CHARS_PER_LINE+1);
 
         ret = snprintf(buf, LCD_CHARS_PER_LINE, "AIR: %d L", msg->oxygen_cl/100);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE4, buf);
 
+        memset(buf, '\0',LCD_CHARS_PER_LINE+1);
 
         ret = snprintf(buf, LCD_CHARS_PER_LINE, "EDT: %d:%d:%d",msg->dive_time_elapsed_ms/(1000*60*60), (msg->dive_time_elapsed_ms%(1000*60*60))/(1000*60), ((msg->dive_time_elapsed_ms%(1000*60*60))%(1000*60))/1000);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE5, buf);
 
+        memset(buf, '\0',LCD_CHARS_PER_LINE+1);
+
         ret = snprintf(buf, LCD_CHARS_PER_LINE, "Alarm: %d", msg->alarm_status);
         SYS_ASSERT(ret >= 0);
         protected_lcd_display(LCD_LINE7, buf);
 
+        memset(buf, '\0',LCD_CHARS_PER_LINE+1);
 
     }
 }
