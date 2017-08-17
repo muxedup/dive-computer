@@ -100,7 +100,7 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         update_msg.oxygen_cl = oxygen_cl;
         update_msg.alarm_status = alarm_status;
 
-        Mailbox_post(g_display_mbox, &p_update_msg, 0);
+        Mailbox_post(g_display_mbox, &p_update_msg, 10);
 
 
     }

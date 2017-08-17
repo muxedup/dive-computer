@@ -193,6 +193,7 @@ main.obj: /Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/st
 main.obj: /Users/munanxu/ti/simplelink_msp432_sdk_1_30_00_40/source/ti/drivers/Watchdog.h
 main.obj: ../MSP_EXP432P401R.h
 main.obj: ../bsp.h
+main.obj: ../bsp_led.h
 main.obj: ../common.h
 main.obj: ../alarm.h
 main.obj: ../protectedlcd.h
@@ -402,6 +403,7 @@ main.obj: /Applications/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.3.LTS/include/ab
 /Users/munanxu/ti/simplelink_msp432_sdk_1_30_00_40/source/ti/drivers/Watchdog.h: 
 ../MSP_EXP432P401R.h: 
 ../bsp.h: 
+../bsp_led.h: 
 ../common.h: 
 ../alarm.h: 
 ../protectedlcd.h: 

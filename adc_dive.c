@@ -39,11 +39,12 @@ void adc_task (unsigned int task_arg0, unsigned int task_arg1){
        ADC_close(adc);
     }
     for(;;){
-    res = ADC_convert(adc, &adcValue);
-    if (res == ADC_STATUS_SUCCESS) {
-        Mailbox_post(g_adc_mbox, &adcValue, BIOS_WAIT_FOREVER);
-        Event_post(g_event_handle, 0x08);
-    }
+        res = ADC_convert(adc, &adcValue);
+        if (res == ADC_STATUS_SUCCESS) {
+            Mailbox_post(g_adc_mbox, &adcValue, BIOS_WAIT_FOREVER);
+            Event_post(g_event_handle, 0x08);
+        }
+        Task_sleep(125);
     }
 
 }
