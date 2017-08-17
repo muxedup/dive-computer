@@ -14,6 +14,7 @@
 #include "main.h"
 #include "Board.h"
 #include "bsp.h"
+#include "bsp_led.h"
 #include "common.h"
 #include "alarm.h"
 #include "protectedlcd.h"
@@ -59,6 +60,8 @@ int main(void)
 
     // basic initialization of the BSP
     bsp_init();
+    
+    bsp_led_init();
 
     // Initialize the reentrant LCD drivers.
     protected_lcd_init();
