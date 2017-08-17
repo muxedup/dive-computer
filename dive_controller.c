@@ -31,14 +31,16 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
     uint16_t adc_value = 475;
     uint32_t eventReg = 0;
 
-    uint8_t alarm_status, prev_alarm_status;
+    static uint8_t alarm_status = ALARM_0;
+    static uint8_t prev_alarm_status = ALARM_0;
     disp_msg_t update_msg;
     disp_msg_t* p_update_msg;
     p_update_msg = &update_msg;
 
     unsigned char unitsState = 0;
-    //char dispString[20];
+
     prev_alarm_status = ALARM_0;
+    alarm_status = ALARM_0;
 
     for(;;) {
         //Task_sleep(1000);
@@ -83,11 +85,10 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         if (oxygen_to_surf_cl > oxygen_cl) {
             // High alert
             alarm_status = ALARM_H;
-
         } else if (dive_rate_mm > 15) {
             // Medium alert
             alarm_status = ALARM_M;
-        } else if (depth_mm < (int32_t)MAX_DEPTH_MM) {
+        } else if (depth_mm > MAX_DEPTH_MM) {
             // low alert
             alarm_status = ALARM_L;
         } else {
