@@ -18,4 +18,6 @@ typedef struct
     uint8_t alarm_status;
 } disp_msg_t;
 
+void display_task(uint32_t, uint32_t);
+
 #endif /* DISPLAY_TASK_H_ */

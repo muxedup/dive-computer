@@ -95,7 +95,7 @@ void dive_controller_task(uint32_t arg0, uint32_t arg1) {
         update_msg.depth_mm = depth_mm;
         update_msg.dive_rate_mm = dive_rate_mm;
         update_msg.dive_time_elapsed_ms = dive_time_elapsed_ms;
-        update_msg.oxygen_cl;
+        update_msg.oxygen_cl = oxygen_cl;
         update_msg.alarm_status = alarm_status;
 
         Mailbox_post(g_display_mbox, &update_msg, 0);

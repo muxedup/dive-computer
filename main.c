@@ -45,10 +45,6 @@ Mailbox_Handle g_display_mbox;
 
 // static function declarations
 static void startup_task(uint32_t, uint32_t);
-static void display_task(uint32_t, uint32_t);
-static void timer_task(uint32_t, uint32_t);
-static void led2_task(uint32_t, uint32_t);
-static void dive_controller_task(uint32_t, uint32_t);
 /**
  *  Main entry point for the application.
  */
@@ -66,6 +62,7 @@ int main(void)
     // Initialize the reentrant LCD drivers.
     protected_lcd_init();
 
+    Board_initADC();
     // create the startup task
     Task_Params_init(&task_params);
     task_params.priority  = STARTUP_PRIO;
