@@ -36,7 +36,7 @@ void button_task(uint32_t arg0, uint32_t arg1)
     for (;;)
     {
         // Delay for 50 ms. We are sampling approximately every 50msec
-        Task_sleep(50);
+        Task_sleep(100);
 
         // Read the current state of the buttons.
 

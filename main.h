@@ -9,9 +9,9 @@
 // Relative Task Priorities (15 = highest; 0 = idle task)
 #define  STARTUP_PRIO    (15)   // Highest priority, to launch others.
 #define  ADC_PRIO        (9)   // Every 125 ms, in a timed loop.
-#define  ALARM_PRIO      (8)    // Up to every 125 msec based on ADC sampling
+#define  ALARM_PRIO      (10)    // Up to every 125 msec based on ADC sampling
 #define  DISPLAY_PRIO    (8)    // Signaled via g_adc_mbox
-#define  DIVE_CONTROLLER_PRIO       (8)
+#define  DIVE_CONTROLLER_PRIO       (9)
 #define  TIMER_PRIO      (8)
 #define  LED2_PRIO        (7)
 #define  SPEAKER_PRIO        (8)

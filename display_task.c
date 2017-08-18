@@ -67,8 +67,10 @@ void display_task(uint32_t arg0, uint32_t arg1)
                 case 4:
                     alarm = "MEDIUM";
                     break;
-                case 5:
+                case 8:
                     alarm = "HIGH";
+                    break;
+                default:
                     break;
         }
 

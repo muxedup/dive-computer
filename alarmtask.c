@@ -53,7 +53,7 @@ void alarmTaskFunction(UArg arg0, UArg arg1)
     for(;;)
     {
         alarm_event = Event_pend(g_alarm_event_handle, 0, 0xFF, BIOS_WAIT_FOREVER);
-        /*switch (alarm_event)
+        switch (alarm_event)
         {
         case ALARM_H:
         {
@@ -122,7 +122,7 @@ void alarmTaskFunction(UArg arg0, UArg arg1)
                     Task_sleep(p_waveform->interval);
                     PWM_setDuty(g_pwm_buzzer, 0);
                 }
-            }*/
+            }
     }
 
 }
